@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime
-from lxml import html  # pip install lxml
+from lxml import html
 import json
 import sys
 
@@ -18,6 +18,7 @@ except:
     sys.exit(1)
 
 scraping_site_name = url.split(".com")[0].split("//")[-1].split(".")[0].capitalize()
+
 
 # Function to convert date format from 'Month Day, Year' to 'MM/DD/YYYY'
 def convert_date_format(input_date):
@@ -89,7 +90,8 @@ for single_url in list_of_urls:
         date = get_text(f'{card_xpath}//time[@class="mr24px-desktop"]//text()')
         titles = get_text(f'{card_xpath}//h2/text()')
         titles = titles.strip()
-        id_links = get_links(f'{card_xpath}//span[@class="grey-text author text-overflow-ellipsis"]//a')
+        ids = get_text(f"{card_xpath}//span[contains(@class, 'inline-row')]/text()")
+        ids = ids.strip().replace('#', '').split('&')[0]
         details = get_text(f'{card_xpath}//div[@class="overflow-text"]//text()')
         details = details.strip()
 
@@ -99,12 +101,8 @@ for single_url in list_of_urls:
         if titles == "":
             titles = get_text(f'{card_xpath}//h2/span/text()')
 
-        if len(id_links) == 1:
-            ids = id_links[0].split('/')[-1].replace('.html', '') if id_links[0] else ''
-        else:
-            ids = "NA"
         if stars == "":
-            stars = 'NA'
+            stars = ''
         if titles == "":
             titles = 'NA'
         if details == "":
