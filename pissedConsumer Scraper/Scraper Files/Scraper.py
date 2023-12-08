@@ -119,7 +119,7 @@ for single_url in list_of_urls:
                 'Date': published_date,
                 'id': ids,
                 'Source_url': single_url,
-                'Titles': titles,
+                'Title': titles,
                 'Details': details
             }
 
