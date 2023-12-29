@@ -85,8 +85,8 @@ for link_no, single_url in enumerate(urls_list):
         url_convert = "https://support.zendesk.com/hc/en-us/community/topics/" + single_url.split("/")[-1] + "#posts"
         no_of_days = int(sys.argv[1])
     except:
-        print("Please enter the URL and number of days as arguments. "
-              "Example: python script.py https://support.zendesk.com/hc/en-us/community/topics 5")
+        print("Please number of days as arguments. "
+              "Example: python script.py 10")
         sys.exit(1)
 
     url = url_convert
@@ -139,7 +139,7 @@ for link_no, single_url in enumerate(urls_list):
     save_data.insert(0, header)
 
     # Save the data to a CSV file
-    with open(f'{file_name}', 'w', encoding='utf-8') as outfile:
+    with open(f'{file_name}', 'w', encoding='utf-8', newline='') as outfile:
         csv_writer = csv.writer(outfile)
         csv_writer.writerows(save_data)
 
