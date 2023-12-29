@@ -78,6 +78,16 @@ def get_data_file(data_file_name):
 # List of URLs to scrape
 urls_list = get_data_file("urls.txt")
 
+current_date = datetime.now().strftime("%m%d%y")
+file_name = f"Zendex_community_Scraper_{current_date}.csv"
+# Add header to the data
+header = ['USER NAME', 'TITLE', 'URL', 'DATE', 'TEXT', 'FORUM CATEGORY']
+with open(f'{file_name}', 'w', encoding='utf-8', newline='') as outfile:
+    csv_writer = csv.writer(outfile)
+    csv_writer.writerow(header)
+
+
+
 # Loop to scrape data from each URL
 for link_no, single_url in enumerate(urls_list):
     try:
@@ -117,7 +127,7 @@ for link_no, single_url in enumerate(urls_list):
                 save_data.append(data)
                 print(published_date)
 
-        # check if the difference between current date and published date is greater than the
+        # check if the difference between the current date and the published date is greater than the
         if days_difference >= no_of_days:
             keep_going = False
             break
@@ -130,17 +140,16 @@ for link_no, single_url in enumerate(urls_list):
         site_url = next_page_link[0]
         next_page_link = next_page_link[1:]
 
-    # Condition to check if there is no data found
-    current_date = datetime.now().strftime("%m%d%y")
-    file_name = f"Zendex_community_Scraper_{current_date}_{scraping_site_name}.csv"
 
-    # Add header to the data
-    header = ['USER NAME', 'TITLE', 'URL', 'DATE', 'TEXT', 'FORUM CATEGORY']
-    save_data.insert(0, header)
+
+
+
+
 
     # Save the data to a CSV file
-    with open(f'{file_name}', 'w', encoding='utf-8', newline='') as outfile:
+    with open(f'{file_name}', 'a', encoding='utf-8', newline='') as outfile:
         csv_writer = csv.writer(outfile)
         csv_writer.writerows(save_data)
+
 
 print("Data has been Scraped and saved")
